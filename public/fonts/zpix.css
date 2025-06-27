@@ -1,0 +1,13 @@
+/* Zpix 字體 CSS - 本地版本 */
+@font-face {
+  font-family: 'Zpix';
+  src: url('./zpix.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 備用方案：如果 Zpix 無法載入，使用系統字體 */
+.zpix-fallback {
+  font-family: "Zpix", "PingFang SC", "Microsoft YaHei", "SimHei", "Source Han Sans SC", "Noto Sans CJK SC", monospace;
+}

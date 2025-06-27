@@ -1,0 +1,424 @@
+/* 8-bit AI Sharehouse Global Styles */
+
+/* 注意：NES.css 應該在 HTML head 中載入，而不是在 CSS 中 @import */
+/* 這樣可以確保正確的載入順序和性能 */
+
+/* 自定義 8-bit 風格變數 */
+:root {
+  --retro-bg: #212529;
+  --retro-primary: #007bff;
+  --retro-success: #28a745;
+  --retro-warning: #ffc107;
+  --retro-danger: #dc3545;
+  --retro-light: #f8f9fa;
+  --retro-dark: #343a40;
+  /* NES.css 推薦的多語言字體設定 */
+  --nes-default-font: "Press Start 2P", cursive;
+  --nes-english-font: "Kongtext", "Press Start 2P", cursive;
+  --nes-japanese-font: "美咲フォント", "Nu もち", "Press Start 2P", cursive;
+  --nes-korean-font: "둥근모꼴", "Press Start 2P", cursive;
+  --nes-chinese-font: "Zpix", "Press Start 2P", cursive;
+  
+  /* 專案使用的字體變數 */
+  --retro-pixel-font: var(--nes-default-font);
+  --retro-chinese-font: var(--nes-chinese-font);
+  --retro-mixed-font: "Zpix", "Press Start 2P", cursive;
+}
+
+/* 全域設定 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* NES.css 官方建議的全域字體設定 */
+html, body, pre, code, kbd, samp {
+  font-family: var(--retro-chinese-font);
+  line-height: 1.6;
+}
+
+body {
+  background-color: var(--retro-bg);
+  color: var(--retro-light);
+  min-height: 100vh;
+  background-image: 
+    linear-gradient(45deg, #000 25%, transparent 25%),
+    linear-gradient(-45deg, #000 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #000 75%),
+    linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+}
+
+/* 8-bit 動畫效果 */
+@keyframes pixelPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes pixelGlow {
+  0%, 100% { 
+    box-shadow: 0 0 5px var(--retro-primary);
+  }
+  50% { 
+    box-shadow: 0 0 20px var(--retro-primary), 0 0 30px var(--retro-primary);
+  }
+}
+
+@keyframes retro-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* 8-bit 容器樣式 */
+.retro-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.retro-window {
+  background: var(--retro-dark);
+  border: 4px solid var(--retro-light);
+  border-radius: 0;
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 4px 4px 0px var(--retro-primary);
+}
+
+/* 8-bit 按鈕增強 */
+.nes-btn {
+  font-family: var(--retro-pixel-font) !important;
+  font-size: 12px !important;
+  transition: all 0.1s ease;
+}
+
+.nes-btn:hover {
+  animation: pixelPulse 0.5s ease-in-out;
+}
+
+.nes-btn.is-primary:hover {
+  animation: pixelGlow 1s ease-in-out infinite;
+}
+
+/* 8-bit 輸入框樣式 */
+.nes-input {
+  font-family: var(--retro-pixel-font) !important;
+  background-color: var(--retro-dark) !important;
+  color: var(--retro-light) !important;
+}
+
+/* 8-bit 對話框樣式 */
+.nes-dialog {
+  background: var(--retro-dark) !important;
+  color: var(--retro-light) !important;
+}
+
+/* 8-bit 進度條樣式 */
+.nes-progress {
+  background-color: var(--retro-dark) !important;
+}
+
+/* 遊戲化元素 */
+.pixel-avatar {
+  width: 64px;
+  height: 64px;
+  background: var(--retro-primary);
+  border: 2px solid var(--retro-light);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.exp-bar {
+  width: 100%;
+  height: 20px;
+  background: var(--retro-dark);
+  border: 2px solid var(--retro-light);
+  overflow: hidden;
+  position: relative;
+}
+
+.exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--retro-success), var(--retro-warning));
+  transition: width 0.3s ease;
+  animation: pixelGlow 2s ease-in-out infinite;
+}
+
+/* 8-bit 文字效果 */
+.pixel-text {
+  font-family: var(--retro-pixel-font);
+  font-size: 14px;
+  line-height: 1.4;
+  text-shadow: 2px 2px 0px var(--retro-dark);
+}
+
+.blink-text {
+  animation: retro-blink 1s infinite;
+}
+
+/* 8-bit 網格背景 */
+.grid-bg {
+  background-image: 
+    linear-gradient(var(--retro-primary) 1px, transparent 1px),
+    linear-gradient(90deg, var(--retro-primary) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.1;
+}
+
+/* 統一背景圖片響應式設定 */
+.bg-welcome {
+  background-image: url(/welcome.png);
+  background-size: 80vw auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a1a1a;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .retro-container {
+    padding: 1rem;
+  }
+  
+  .pixel-text {
+    font-size: 10px;
+  }
+  
+  .nes-btn {
+    font-size: 12px !important;
+  }
+  
+  /* 手機版背景圖片統一設定 */
+  .bg-welcome {
+    background-size: 120vw auto !important;
+    background-position: center center !important;
+  }
+  
+  /* 手機版按鈕放大 */
+  button[style*="280px"] {
+    width: 320px !important;
+    height: 50px !important;
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
+  
+  input[style*="280px"] {
+    width: 320px !important;
+    height: 50px !important;
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
+}
+
+/* 字體清晰度改進 */
+.nes-btn {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  padding: 12px 16px !important;
+}
+
+.nes-container {
+  font-size: 14px !important;
+}
+
+/* 確保所有文字清晰可見 */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 改善 Press Start 2P 字體在小尺寸下的可讀性 */
+@media screen and (max-width: 768px) {
+  .nes-btn {
+    font-size: 12px !important;
+  }
+}
+
+/* 特殊字體大小類別 */
+.text-readable {
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+
+.text-small-readable {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+/* 中文字體優化類別 */
+.chinese-text {
+  font-family: var(--retro-chinese-font) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.mixed-text {
+  font-family: var(--retro-mixed-font) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+/* 中文標題樣式 */
+.chinese-title {
+  font-family: var(--retro-chinese-font) !important;
+  font-size: 24px !important;
+  line-height: 1.4 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 中文按鈕文字 */
+.nes-btn.chinese-btn {
+  font-family: var(--retro-chinese-font) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+}
+
+/* 小尺寸中文文字 */
+.chinese-small {
+  font-family: var(--retro-chinese-font) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.3px;
+}
+
+/* 字體測試專用類別 */
+.font-press-start {
+  font-family: "Press Start 2P", cursive !important;
+}
+
+.font-zpix {
+  font-family: "Zpix", cursive !important;
+}
+
+.font-mixed {
+  font-family: var(--retro-mixed-font) !important;
+}
+
+.code-block {
+  color: #00ff00 !important;
+  font-family: monospace !important;
+  background: #000 !important;
+  padding: 1rem !important;
+  border-radius: 4px !important;
+}
+
+/* 修復 hydration 問題的穩定動畫 */
+.pixel-dot {
+  animation: pixelFlicker 2s ease-in-out infinite;
+}
+
+@keyframes pixelFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* 地鐵閘口特效 */
+.gate-entrance {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.pixel-gate {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 閘門動畫 */
+@keyframes gateOpen {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(var(--gate-distance)); }
+}
+
+.gate-left {
+  --gate-distance: -80px;
+}
+
+.gate-right {
+  --gate-distance: 80px;
+}
+
+.gate-opening {
+  animation: gateOpen 0.8s ease-in-out forwards;
+}
+
+/* 螢幕閃爍效果 */
+@keyframes screenFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.screen-flicker {
+  animation: screenFlicker 2s infinite;
+}
+
+/* 指示燈呼吸效果 */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+.indicator-breathe {
+  animation: breathe 1.5s infinite;
+}
+
+/* 地板格線效果 */
+.floor-grid {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 選項按鈕進入動畫 */
+@keyframes slideInFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-bottom {
+  animation: slideInFromBottom 0.6s ease-out;
+}
+
+/* 延遲動畫 */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* 小螢幕手機版響應式設定 */
+@media (max-width: 480px) {
+  /* 小螢幕手機版按鈕調整 */
+  button[style*="280px"] {
+    width: 300px !important;
+    height: 45px !important;
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+  
+  input[style*="280px"] {
+    width: 300px !important;
+    height: 45px !important;
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+}
