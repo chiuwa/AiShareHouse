@@ -1,40 +1,41 @@
 # 🎮 8-Bit AI Sharehouse
 
-一個結合懷舊 8-bit 遊戲風格與現代 AI 技術的任務管理應用。
+一個結合懷舊 8-bit 遊戲風格與虛擬公司場景的 AI 應用系統。
 
 ## ✨ 特色功能
 
 ### 🎨 8-bit 復古風格
 - **NES.css 整合**: 完整的 8-bit 像素風格 UI
+- **Zpix 中文字體**: 專為像素風格設計的中文字體
 - **像素動畫**: 流暢的 CSS 動畫效果
-- **復古音效**: 8-bit 風格的音效回饋（開發中）
-- **懷舊色彩**: 經典遊戲機配色方案
+- **復古色彩**: 經典遊戲機配色方案
 
-### 🎯 遊戲化任務管理
-- **經驗值系統**: 完成任務獲得 EXP
-- **等級提升**: 持續使用提升用戶等級
-- **任務分類**: 簡單、中等、困難三種難度
-- **優先級管理**: 高、中、低優先級標示
+### 🏢 虛擬公司體驗
+- **電梯系統**: 可選擇不同樓層，支援樓層狀態管理
+- **員工入職**: 新同事報到流程
+- **角色對話**: AI 密書與接待員角色互動
+- **公司資訊**: 關於我們頁面展示
 
-### 🤖 AI 小秘書助手
-- **智能提醒**: AI 助手提供個性化建議
-- **對話介面**: 8-bit 風格的對話系統
-- **每日簡報**: 重要事項自動整理
+### 🤖 AI 角色助手
+- **小秘書**: 電梯導引與樓層介紹
+- **接待員**: 新員工報到與公司介紹
+- **對話系統**: 8-bit 風格的對話介面
+- **角色圖片**: 動畫角色顯示
 
 ### 🎮 遊戲化元素
-- **像素頭像**: 可自訂的 8-bit 角色
-- **進度條**: 視覺化經驗值顯示
-- **成就系統**: 完成任務解鎖成就（開發中）
-- **音效系統**: 可控制的 8-bit 音效
+- **登入系統**: 員工證風格的登入介面
+- **樓層管理**: 修繕中/可用狀態切換
+- **統一彈窗**: 8-bit 風格的訊息提示系統
+- **響應式設計**: 支援桌面與手機版本
 
 ## 🛠 技術棧
 
 - **前端框架**: Next.js 14 + TypeScript
 - **樣式系統**: TailwindCSS + NES.css
-- **動畫效果**: Framer Motion + CSS Animations
-- **音效引擎**: Howler.js（規劃中）
+- **動畫效果**: CSS Animations
 - **狀態管理**: React Hooks
-- **開發工具**: ESLint + TypeScript
+- **字體系統**: Zpix (中文) + Press Start 2P (英文)
+- **部署平台**: Vercel
 
 ## 🚀 快速開始
 
@@ -47,6 +48,7 @@ npm install
 ```bash
 npm run dev
 ```
+開啟 [http://localhost:3000](http://localhost:3000) 查看結果。
 
 ### 構建生產版本
 ```bash
@@ -58,112 +60,148 @@ npm start
 
 ```
 src/
-├── app/                    # Next.js App Router
-│   ├── globals.css        # 全域樣式
-│   ├── layout.tsx         # 根布局
-│   └── page.tsx           # 主頁面
-├── components/            # React 組件
-│   ├── ui/               # 可重用 UI 組件
-│   │   ├── PixelButton.tsx
-│   │   ├── PixelCard.tsx
-│   │   ├── PixelAvatar.tsx
-│   │   ├── ExperienceBar.tsx
-│   │   ├── TaskCard.tsx
-│   │   ├── SoundManager.tsx
-│   │   └── NotificationSystem.tsx
-│   ├── GameLoader.tsx     # 遊戲載入畫面
-│   ├── LoginScreen.tsx    # 登入介面
-│   ├── CompanyEntrance.tsx # 公司入口動畫
-│   └── Dashboard.tsx      # 主控制台
+├── app/                     # Next.js App Router
+│   ├── globals.css         # 全域樣式與響應式設定
+│   ├── layout.tsx          # 根布局
+│   ├── page.tsx            # 主頁面 (選項按鈕)
+│   ├── login/              # 登入頁面
+│   ├── elevator/           # 電梯選擇頁面
+│   ├── new-employee/       # 新同事報到頁面
+│   └── about-us/           # 關於我們頁面
+├── components/             # React 組件
+│   └── ui/                # UI 組件
+│       └── PopupMessage.tsx # 統一彈窗組件
+├── hooks/                  # 自定義 Hooks
+│   └── usePopup.ts        # 彈窗管理 Hook
+public/
+├── design.json            # 設計配置檔案
+├── fonts/                 # 字體檔案
+│   ├── zpix.css
+│   └── zpix.ttf
+└── *.png                  # 場景圖片
 ```
 
-## 🎨 UI 組件
+## 🎨 核心組件
 
-### PixelButton
-8-bit 風格按鈕，支援多種樣式和動畫效果。
+### PopupMessage
+統一的 8-bit 風格彈窗組件，支援 success、error、warning、info 四種類型。
 
-### PixelCard
-像素風格卡片容器，可設定不同主題色彩。
+### usePopup Hook
+彈窗狀態管理，提供 showSuccess、showError、showWarning、showInfo 等便捷方法。
 
-### ExperienceBar
-經驗值進度條，支援動畫和數值顯示。
+## 📱 頁面功能
 
-### TaskCard
-任務卡片，包含難度、優先級、完成狀態等資訊。
+### 主頁面 (/)
+- **未登入用戶**: 顯示三個選項按鈕（拍卡進入、新同事報到、關於我們）
+- **已登入用戶**: 只顯示拍卡進入按鈕，直接跳轉電梯頁面
 
-### NotificationSystem
-8-bit 風格的通知系統，支援多種通知類型。
+### 登入頁面 (/login)
+- 員工證風格設計
+- 底部滑入動畫效果
+- 登入成功後跳轉主頁
 
-## 🎵 音效系統
+### 電梯頁面 (/elevator)
+- 樓層選擇功能
+- 樓層狀態管理 (active/修繕中)
+- 小秘書角色對話
+- 樓層資訊彈窗
 
-- **點擊音效**: 按鈕點擊回饋
-- **成功音效**: 任務完成慶祝
-- **升級音效**: 等級提升特效
-- **錯誤音效**: 操作失敗提示
-- **音量控制**: 可調節音效大小
+### 新同事報到 (/new-employee)
+- 接待員角色引導
+- 註冊表單功能
+- 對話序列系統
+- 成功註冊提示
 
-## 🎮 遊戲機制
+### 關於我們 (/about-us)
+- 公司資訊展示
+- 接待員介紹
+- 返回主頁功能
 
-### 經驗值系統
-- 完成簡單任務: +25 EXP
-- 完成中等任務: +50 EXP  
-- 完成困難任務: +100 EXP
-- 每 100 EXP 升一級
+## 🌐 部署
 
-### 用戶等級
-- Level 1-5: 新手
-- Level 6-10: 熟練
-- Level 11-20: 專家
-- Level 21+: 大師
+### Vercel 部署
+
+1. **安裝 Vercel CLI**
+```bash
+npm i -g vercel
+```
+
+2. **登入 Vercel**
+```bash
+vercel login
+```
+
+3. **部署到生產環境**
+```bash
+npm run build
+vercel --prod
+```
+
+### 手動部署
+
+1. **建置專案**
+```bash
+npm run build
+```
+
+2. **部署檔案**
+將 `.next/` 目錄和相關檔案上傳到你的伺服器。
+
+### 環境要求
+- Node.js 18.17 或更高版本
+- npm 或 yarn 套件管理器
+
+## 🎯 設計配置
+
+專案使用 `public/design.json` 統一管理：
+- 頁面配置
+- 角色設定
+- 樣式定義
+- 對話內容
+- 動畫效果
 
 ## 🚧 開發進度
 
 ### ✅ 已完成
-- [x] 8-bit UI 組件庫
-- [x] 遊戲化任務系統
-- [x] 經驗值與等級機制
+- [x] 8-bit UI 設計系統
+- [x] 虛擬公司場景
+- [x] 電梯樓層系統
+- [x] 角色對話系統
+- [x] 登入/註冊功能
 - [x] 響應式設計
-- [x] 音效控制介面
-- [x] 通知系統
+- [x] 統一彈窗系統
+- [x] Vercel 部署
 
 ### 🔄 開發中
-- [ ] Firebase 整合
-- [ ] AI 對話功能
-- [ ] 真實音效檔案
-- [ ] 成就系統
-- [ ] 數據持久化
+- [ ] 更多樓層頁面
+- [ ] 角色互動功能
+- [ ] 音效系統
 
 ### 📋 待開發
-- [ ] 多語言支援
-- [ ] 主題切換
-- [ ] 社交功能
-- [ ] 數據分析
+- [ ] 資料持久化
+- [ ] 更多角色
 - [ ] PWA 支援
-
-## 🎯 使用場景
-
-- **個人任務管理**: 日常工作任務追蹤
-- **習慣養成**: 遊戲化的習慣建立
-- **工作效率**: 提升工作動機與成就感
-- **娛樂體驗**: 懷舊遊戲風格的使用體驗
+- [ ] 多語言支援
 
 ## 📝 開發筆記
 
-### 設計原則
-1. **單一職責**: 每個組件只負責一個功能
-2. **可重用性**: UI 組件高度模組化
-3. **響應式**: 支援各種螢幕尺寸
-4. **無障礙**: 考慮無障礙使用需求
+### 字體系統
+- **中文**: Zpix 像素字體 (6.8MB)
+- **英文**: Press Start 2P
+- **備用**: PingFang SC, Microsoft YaHei
 
-### 效能優化
-- 使用 Next.js 的圖片優化
-- 組件懶載入
-- CSS 動畫硬體加速
-- 記憶體洩漏防護
+### 響應式設計
+- **桌面版**: 80vw auto 背景圖片
+- **手機版**: 120vw auto 背景圖片
+- **按鈕尺寸**: 自動調整
+
+## 🌍 線上演示
+
+ [https://sharehouse-djqyiu0c9-chiuwas-projects.vercel.app](https://sharehouse-djqyiu0c9-chiuwas-projects.vercel.app)
 
 ## 📄 授權
 
-MIT License - 請參考 LICENSE 文件
+MIT License
 
 ## 🤝 貢獻
 
@@ -171,4 +209,4 @@ MIT License - 請參考 LICENSE 文件
 
 ---
 
-🎮 **讓工作變得有趣！** 🎮
+🎮 **歡迎來到 De. S&V AI 虛擬公司！** 🎮
