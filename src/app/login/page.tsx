@@ -30,8 +30,8 @@ export default function LoginPage() {
         localStorage.setItem('userLoggedIn', 'true')
         localStorage.setItem('userName', username)
         
-        // 跳轉回首頁
-        router.push('/')
+        // 跳轉到電梯頁面
+        router.push('/elevator')
       } else {
         setError('登入失敗，請檢查您的憑證')
       }

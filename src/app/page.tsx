@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { PopupMessage } from '@/components/ui/PopupMessage'
+import { usePopup } from '@/hooks/usePopup'
 
 export default function HomePage() {
   const router = useRouter()
+  const { popup, showInfo, closePopup } = usePopup()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
   const [currentDialog, setCurrentDialog] = useState("您好，今日您有兩件重要任務，是否要先查看？")
@@ -16,9 +19,7 @@ export default function HomePage() {
     const loginStatus = localStorage.getItem('userLoggedIn') === 'true'
     setIsLoggedIn(loginStatus)
     
-    if (loginStatus) {
-      setShowDialog(true)
-    }
+    // 移除自動顯示對話框，讓所有用戶都先看到選項按鈕
   }, [])
 
   const handleOptionSelect = (optionId: string, optionText: string) => {
@@ -27,16 +28,22 @@ export default function HomePage() {
     // 根據選項設置對話內容
     switch(optionId) {
       case "1":
-        // 拍卡進入 - 跳轉到登入頁面
-        router.push('/login')
+        // 拍卡進入 - 檢查登入狀態
+        if (isLoggedIn) {
+          // 已登入：直接跳轉到電梯頁面
+          router.push('/elevator')
+        } else {
+          // 未登入：跳轉到登入頁面
+          router.push('/login')
+        }
         break
       case "2":
-        setShowDialog(true)
-        setCurrentDialog("歡迎新同事！請先填寫基本資料，我們將為您安排入職流程。")
+        // 新同事報到 - 跳轉到新同事報到頁面
+        router.push('/new-employee')
         break
       case "3":
-        setShowDialog(true)
-        setCurrentDialog("De. S&V 旗下項目")
+        // 關於我們 - 跳轉到關於我們頁面
+        router.push('/about-us')
         break
       default:
         setCurrentDialog("請選擇您需要的服務項目。")
@@ -51,11 +58,11 @@ export default function HomePage() {
     } else if (selectedOption === "2") {
       // 新同事報到邏輯
       console.log("執行新同事報到功能")
-      alert("正在開啟新同事報到表單...")
+      showInfo("正在開啟新同事報到表單...")
     } else if (selectedOption === "3") {
       // 關於我們邏輯
       console.log("顯示關於我們資訊")
-      alert("顯示公司資訊...")
+      showInfo("顯示公司資訊...")
     } else {
       // 已登入用戶的日常對話
       setCurrentDialog("有什麼我可以幫助您的嗎？")
@@ -113,8 +120,8 @@ export default function HomePage() {
         </button>
       )}
 
-      {/* 未登入：顯示選項按鈕 */}
-      {!isLoggedIn && (
+      {/* 顯示選項按鈕（所有用戶都能看到） */}
+      {!showDialog && (
         <div style={{
           position: 'absolute',
           top: '40%',
@@ -163,75 +170,79 @@ export default function HomePage() {
             拍卡進入
           </button>
 
-          {/* 選項 2: 新同事報到 */}
-          <button
-            onClick={() => handleOptionSelect("2", "新同事報到")}
-            style={{
-              width: '280px',
-              height: '40px',
-              backgroundColor: '#000000',
-              color: '#FFFFFF',
-              border: '2px solid #FFFFFF',
-              fontSize: '16px',
-              cursor: 'pointer',
-              fontFamily: '"Press Start 2P", "Zpix", "PingFang SC", "Microsoft YaHei", monospace',
-              padding: '10px',
-              margin: '8px',
-              borderRadius: '4px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
-              transition: 'all 0.2s',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#333333'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.6)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#000000'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            新同事報到
-          </button>
+          {/* 選項 2: 新同事報到 - 僅未登入用戶可見 */}
+          {!isLoggedIn && (
+            <button
+              onClick={() => handleOptionSelect("2", "新同事報到")}
+              style={{
+                width: '280px',
+                height: '40px',
+                backgroundColor: '#000000',
+                color: '#FFFFFF',
+                border: '2px solid #FFFFFF',
+                fontSize: '16px',
+                cursor: 'pointer',
+                fontFamily: '"Press Start 2P", "Zpix", "PingFang SC", "Microsoft YaHei", monospace',
+                padding: '10px',
+                margin: '8px',
+                borderRadius: '4px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = '#333333'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.6)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = '#000000'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)'
+              }}
+            >
+              新同事報到
+            </button>
+          )}
 
-          {/* 選項 3: 關於我們 */}
-          <button
-            onClick={() => handleOptionSelect("3", "關於我們")}
-            style={{
-              width: '280px',
-              height: '40px',
-              backgroundColor: '#000000',
-              color: '#FFFFFF',
-              border: '2px solid #FFFFFF',
-              fontSize: '16px',
-              cursor: 'pointer',
-              fontFamily: '"Press Start 2P", "Zpix", "PingFang SC", "Microsoft YaHei", monospace',
-              padding: '10px',
-              margin: '8px',
-              borderRadius: '4px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
-              transition: 'all 0.2s',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#333333'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.6)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#000000'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            關於我們
-          </button>
+          {/* 選項 3: 關於我們 - 僅未登入用戶可見 */}
+          {!isLoggedIn && (
+            <button
+              onClick={() => handleOptionSelect("3", "關於我們")}
+              style={{
+                width: '280px',
+                height: '40px',
+                backgroundColor: '#000000',
+                color: '#FFFFFF',
+                border: '2px solid #FFFFFF',
+                fontSize: '16px',
+                cursor: 'pointer',
+                fontFamily: '"Press Start 2P", "Zpix", "PingFang SC", "Microsoft YaHei", monospace',
+                padding: '10px',
+                margin: '8px',
+                borderRadius: '4px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = '#333333'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.6)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = '#000000'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)'
+              }}
+            >
+              關於我們
+            </button>
+          )}
         </div>
       )}
 
@@ -326,6 +337,17 @@ export default function HomePage() {
           }
         }
       `}</style>
+
+      {/* 彈窗組件 */}
+      <PopupMessage
+        isOpen={popup.isOpen}
+        onClose={closePopup}
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        showCancelButton={popup.showCancelButton}
+        onConfirm={popup.onConfirm}
+      />
     </div>
   )
 }

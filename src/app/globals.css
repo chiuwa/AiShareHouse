@@ -177,6 +177,14 @@ body {
   background-color: #1a1a1a;
 }
 
+.bg-reception {
+  background-image: url(/reception.png);
+  background-size: 80vw auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a1a2e;
+}
+
 /* 響應式設計 */
 @media (max-width: 768px) {
   .retro-container {
@@ -192,7 +200,8 @@ body {
   }
   
   /* 手機版背景圖片統一設定 */
-  .bg-welcome {
+  .bg-welcome,
+  .bg-reception {
     background-size: 120vw auto !important;
     background-position: center center !important;
   }
@@ -405,6 +414,67 @@ body {
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 
+/* 角色圖片動畫 */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 對話框內角色圖片動畫 */
+@keyframes slideInFromLeftSmall {
+  0% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.receptionist-image {
+  position: fixed;
+  left: 20px;
+  bottom: 180px;
+  width: 200px;
+  height: auto;
+  z-index: 5;
+  animation: slideInFromLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.secretary-image {
+  position: fixed;
+  right: 20px;
+  bottom: 180px;
+  width: 200px;
+  height: auto;
+  z-index: 5;
+  animation: slideInFromRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
 /* 小螢幕手機版響應式設定 */
 @media (max-width: 480px) {
   /* 小螢幕手機版按鈕調整 */
@@ -420,5 +490,18 @@ body {
     height: 45px !important;
     font-size: 14px !important;
     padding: 10px !important;
+  }
+  
+  /* 手機版接待員圖片調整 */
+  .receptionist-image {
+    width: 120px !important;
+    left: 10px !important;
+    bottom: 160px !important;
+  }
+  
+  .secretary-image {
+    width: 120px !important;
+    right: 10px !important;
+    bottom: 160px !important;
   }
 }

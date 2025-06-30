@@ -1,0 +1,533 @@
+{
+    "scene": {
+      "backgroundImage": "public/reception.png",
+      "components": [
+        {
+          "type": "option_buttons",
+          "position": { "x": "center", "y": "40%" },
+          "style": {
+            "buttonWidth": 280,
+            "buttonHeight": 40,
+            "fontSize": 16,
+            "backgroundColor": "#000000",
+            "textColor": "#FFFFFF",
+            "border": "2px solid #FFFFFF",
+            "padding": 10,
+            "margin": 8
+          },
+          "options": [
+            { "id": "1", "text": "拍卡進入" },
+            { "id": "2", "text": "新同事報到" },
+            { "id": "3", "text": "關於我們" }
+          ]
+        },
+        {
+          "type": "dialog_box",
+          "position": { "x": "center", "y": "85%" },
+          "style": {
+            "width": "90%",
+            "height": 120,
+            "backgroundColor": "#000000",
+            "textColor": "#FFFFFF",
+            "border": "2px solid #FFFFFF",
+            "fontSize": 14,
+            "padding": 16,
+            "borderRadius": 8,
+            "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.5)",
+            "position": "absolute",
+            "bottom": "60px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 3,
+            "animation": "dialogSlideIn 0.6s ease-out"
+          },
+          "character": "小秘書",
+          "text": "「您好，今日您有兩件重要任務，是否要先查看？」"
+        }
+      ]
+    },
+    "characters": {
+      "小秘書": {
+        "role": "assistant",
+        "color": "#00ff00",
+        "image": {
+          "src": "/secretary.png",
+          "position": "left",
+          "animation": "slideInFromLeft",
+          "style": {
+            "width": "300px",
+            "height": "auto",
+            "position": "fixed",
+            "left": "5px",
+            "bottom": "200px",
+            "zIndex": 5
+          }
+        },
+        "dialogs": {
+          "welcome": "「您好，今日您有兩件重要任務，是否要先查看？」",
+          "card_entry": "「歡迎回來！請問今天需要什麼協助嗎？」",
+          "about_us": "「這裡是De. S&V AI 虛擬公司，我們提供各種 AI 助手服務。」",
+          "elevator_welcome": "「歡迎進入電梯！請選擇您要前往的樓層。」",
+          "elevator_selection": "「請選擇您的目的地樓層，我將為您介紹該樓層的功能。」"
+        }
+      },
+      "接待員": {
+        "role": "receptionist",
+        "color": "#ffaa00",
+        "image": {
+          "src": "/receptionist.png",
+          "position": "left",
+          "animation": "slideInFromLeftSmall",
+          "style": {
+            "width": "80px",
+            "height": "auto",
+            "position": "absolute",
+            "bottom": "150px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "zIndex": 3,
+            "imageRendering": "pixelated"
+          },
+          "container_style": {
+            "position": "absolute",
+            "bottom": "150px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "width": "90%",
+            "display": "flex",
+            "justifyContent": "flex-start",
+            "alignItems": "flex-end",
+            "zIndex": 3
+          }
+        },
+        "dialogs": {
+          "login_welcome": "「歡迎來到我們公司！請輸入您的員工資訊進行登入。」",
+          "new_employee": "「歡迎加入我們公司！我是接待員，讓我為您介紹公司環境和規章制度。」",
+          "orientation_start": "「首先，恭喜您成為我們團隊的一員！請跟我來進行新人導覽。」",
+          "company_tour": "「這裡是我們的工作區域，您可以在這裡與各種 AI 助手協作完成任務。」",
+          "welcome_package": "「這是您的新人歡迎包，包含員工手冊和必要的工作資訊。」",
+          "questions": "「如果您有任何問題，隨時都可以找我或小秘書，我們很樂意為您服務！」",
+          "signup_form": "「最後，請填寫您的基本資料完成註冊程序。」",
+          "about_company": "「這裡是De. S&V AI 虛擬公司」"
+        }
+      }
+    },
+    "pages": {
+      "main": {
+        "character": null,
+        "show_character_image": false
+      },
+      "login": {
+        "character": "接待員",
+        "default_dialog": "login_welcome",
+        "show_character_image": true
+      },
+      "new_employee": {
+        "character": "接待員",
+        "default_dialog": "new_employee",
+        "show_character_image": true,
+        "dialog_sequence": [
+          "new_employee",
+          "orientation_start",
+          "company_tour",
+          "welcome_package",
+          "questions",
+          "signup_form"
+        ],
+        "show_signup_form": true
+      },
+      "about_us": {
+        "character": "接待員",
+        "default_dialog": "about_company",
+        "show_character_image": true
+      },
+      "elevator": {
+        "character": "小秘書",
+        "backgroundImage": "/elevator.png",
+        "default_dialog": "elevator_welcome",
+        "show_character_image": true,
+        "show_floor_selection": true,
+        "floors": [
+          { "id": "1F", "name": "1F", "description": "接待區與訪客服務", "active": false },
+          { "id": "2F", "name": "2F ", "description": "日常工作與會議室", "active": false },
+          { "id": "3F", "name": "3F ", "description": "開發與技術支援", "active": false },
+          { "id": "4F", "name": "4F ", "description": "高階主管辦公室", "active": false },
+          { "id": "5F", "name": "5F ", "description": "CEO辦公室", "active": true }
+        ]
+      }
+    },
+    "styles": {
+      "character_image_container": {
+        "position": "absolute",
+        "bottom": "150px",
+        "left": "50%",
+        "transform": "translateX(-50%)",
+        "width": "90%",
+        "display": "flex",
+        "justifyContent": "flex-start",
+        "alignItems": "flex-end",
+        "zIndex": 3
+      },
+      "character_image": {
+        "width": "150px",
+        "height": "auto",
+        "imageRendering": "pixelated"
+      },
+      "dialog_box": {
+        "position": "absolute",
+        "bottom": "60px",
+        "left": "50%",
+        "transform": "translateX(-50%)",
+        "width": "90%",
+        "height": "140px",
+        "backgroundColor": "#000000",
+        "color": "#FFFFFF",
+        "border": "2px solid #FFFFFF",
+        "fontSize": "14px",
+        "padding": "16px",
+        "zIndex": 3,
+        "borderRadius": "8px",
+        "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.5)",
+        "display": "flex",
+        "flexDirection": "column"
+      },
+      "character_name": {
+        "fontSize": "12px",
+        "marginBottom": "8px",
+        "fontWeight": "bold"
+      },
+      "dialog_content": {
+        "flex": 1,
+        "lineHeight": "1.4",
+        "overflow": "hidden",
+        "display": "flex",
+        "alignItems": "flex-start",
+        "paddingBottom": "8px",
+        "minHeight": "60px"
+      },
+      "continue_button_area": {
+        "borderTop": "1px solid #333333",
+        "paddingTop": "8px",
+        "display": "flex",
+        "justifyContent": "center",
+        "alignItems": "center"
+      },
+      "continue_button": {
+        "background": "#333333",
+        "border": "2px solid #ffaa00",
+        "color": "#FFFFFF",
+        "padding": "6px 16px",
+        "fontSize": "12px",
+        "cursor": "pointer",
+        "borderRadius": "4px",
+        "transition": "all 0.2s",
+        "boxShadow": "0 2px 4px rgba(0, 0, 0, 0.3)"
+      },
+      "continue_button_hover": {
+        "background": "#ffaa00",
+        "color": "#000000",
+        "transform": "translateY(-1px)"
+      },
+      "signup_form": {
+        "position": "fixed",
+        "top": "35%",
+        "left": "50%",
+        "transform": "translateX(-50%)",
+        "zIndex": 10,
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "16px",
+        "alignItems": "center"
+      },
+      "signup_input": {
+        "width": "280px",
+        "height": "40px",
+        "backgroundColor": "#000000",
+        "color": "#FFFFFF",
+        "border": "2px solid #FFFFFF",
+        "fontSize": "16px",
+        "padding": "8px 12px",
+        "borderRadius": "4px",
+        "outline": "none"
+      },
+      "signup_input_focus": {
+        "borderColor": "#ffaa00",
+        "boxShadow": "0 0 8px rgba(255, 170, 0, 0.3)"
+      },
+      "signup_button": {
+        "width": "280px",
+        "height": "40px",
+        "backgroundColor": "#000000",
+        "color": "#FFFFFF",
+        "border": "2px solid #FFFFFF",
+        "fontSize": "16px",
+        "cursor": "pointer",
+        "borderRadius": "4px",
+        "marginTop": "8px",
+        "transition": "all 0.2s"
+      },
+      "signup_button_hover": {
+        "backgroundColor": "#FFFFFF",
+        "color": "#000000",
+        "transform": "translateY(-1px)",
+        "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.3)"
+      },
+      "success_popup": {
+        "position": "fixed",
+        "top": "50%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%)",
+        "zIndex": 20,
+        "backgroundColor": "#000000",
+        "color": "#FFFFFF",
+        "border": "2px solid #FFFFFF",
+        "borderRadius": "8px",
+        "padding": "24px",
+        "minWidth": "320px",
+        "textAlign": "center",
+        "boxShadow": "0 8px 16px rgba(0, 0, 0, 0.8)",
+        "animation": "popupSlideIn 0.5s ease-out"
+      },
+      "success_popup_overlay": {
+        "position": "fixed",
+        "top": "0",
+        "left": "0",
+        "width": "100%",
+        "height": "100%",
+        "backgroundColor": "rgba(0, 0, 0, 0.7)",
+        "zIndex": 19,
+        "animation": "fadeIn 0.3s ease-out"
+      },
+      "success_popup_title": {
+        "color": "#FFFFFF",
+        "fontSize": "18px",
+        "marginBottom": "16px",
+        "fontWeight": "bold"
+      },
+      "success_popup_message": {
+        "fontSize": "14px",
+        "marginBottom": "20px",
+        "lineHeight": "1.5",
+        "color": "#FFFFFF"
+      },
+      "success_popup_button": {
+        "backgroundColor": "#FFFFFF",
+        "color": "#000000",
+        "border": "2px solid #FFFFFF",
+        "padding": "8px 24px",
+        "fontSize": "14px",
+        "cursor": "pointer",
+        "borderRadius": "4px",
+        "fontWeight": "bold",
+        "transition": "all 0.2s",
+        "boxShadow": "0 2px 4px rgba(0, 0, 0, 0.3)"
+      },
+      "success_popup_button_hover": {
+        "backgroundColor": "#000000",
+        "color": "#FFFFFF",
+        "transform": "translateY(-1px)",
+        "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.4)"
+      },
+      "elevator_floor_selection": {
+        "position": "absolute",
+        "top": "50%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%)",
+        "zIndex": 3,
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "12px",
+        "alignItems": "center",
+        "width": "90%",
+        "maxWidth": "400px"
+      },
+      "elevator_floor_button": {
+        "width": "320px",
+        "height": "50px",
+        "backgroundColor": "#000000",
+        "color": "#FFFFFF",
+        "border": "2px solid #FFFFFF",
+        "fontSize": "14px",
+        "cursor": "pointer",
+        "borderRadius": "6px",
+        "padding": "8px 16px",
+        "transition": "all 0.3s",
+        "display": "flex",
+        "flexDirection": "column",
+        "alignItems": "flex-start",
+        "justifyContent": "center",
+        "boxShadow": "0 4px 8px rgba(255, 255, 255, 0.1)"
+      },
+      "elevator_floor_button_hover": {
+        "backgroundColor": "#FFFFFF",
+        "color": "#000000",
+        "transform": "translateY(-2px)",
+        "boxShadow": "0 6px 12px rgba(255, 255, 255, 0.2)"
+      },
+      "elevator_floor_button_disabled": {
+        "width": "320px",
+        "height": "50px",
+        "backgroundColor": "#333333",
+        "color": "#888888",
+        "border": "2px solid #555555",
+        "fontSize": "14px",
+        "cursor": "not-allowed",
+        "borderRadius": "6px",
+        "padding": "8px 16px",
+        "display": "flex",
+        "flexDirection": "column",
+        "alignItems": "flex-start",
+        "justifyContent": "center",
+        "boxShadow": "0 2px 4px rgba(0, 0, 0, 0.3)",
+        "opacity": "0.6"
+      },
+      "elevator_floor_name": {
+        "fontSize": "16px",
+        "fontWeight": "bold",
+        "marginBottom": "2px"
+      },
+      "elevator_floor_description": {
+        "fontSize": "11px",
+        "opacity": "0.8",
+        "lineHeight": "1.2"
+      },
+      "responsive": {
+        "mobile_768": {
+          "character_image_container": {
+            "bottom": "200px"
+          },
+          "dialog_box": {
+            "width": "95%",
+            "height": "120px",
+            "fontSize": "12px",
+            "bottom": "40px"
+          },
+          "signup_input": {
+            "width": "250px",
+            "height": "45px",
+            "fontSize": "14px"
+          },
+          "signup_button": {
+            "width": "250px",
+            "height": "45px",
+            "fontSize": "14px"
+          },
+          "elevator_floor_button": {
+            "width": "280px",
+            "height": "45px",
+            "fontSize": "13px"
+          }
+        },
+        "mobile_480": {
+          "character_image_container": {
+            "bottom": "220px"
+          },
+          "dialog_box": {
+            "width": "98%",
+            "height": "140px",
+            "fontSize": "11px",
+            "bottom": "30px"
+          },
+          "signup_input": {
+            "width": "220px",
+            "height": "40px",
+            "fontSize": "12px"
+          },
+          "signup_button": {
+            "width": "220px",
+            "height": "40px",
+            "fontSize": "12px"
+          },
+          "elevator_floor_button": {
+            "width": "250px",
+            "height": "40px",
+            "fontSize": "12px"
+          }
+        }
+      }
+    },
+    "animations": {
+      "slideInFromRight": {
+        "keyframes": {
+          "0%": {
+            "transform": "translateX(100%)",
+            "opacity": "0"
+          },
+          "100%": {
+            "transform": "translateX(0)",
+            "opacity": "1"
+          }
+        },
+        "duration": "0.8s",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      "slideInFromLeft": {
+        "keyframes": {
+          "0%": {
+            "transform": "translateX(-100%)",
+            "opacity": "0"
+          },
+          "100%": {
+            "transform": "translateX(0)",
+            "opacity": "1"
+          }
+        },
+        "duration": "0.8s",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      "slideInFromLeftSmall": {
+        "keyframes": {
+          "0%": {
+            "transform": "translateX(-50px)",
+            "opacity": "0"
+          },
+          "100%": {
+            "transform": "translateX(0)",
+            "opacity": "1"
+          }
+        },
+        "duration": "0.8s",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      "dialogSlideIn": {
+        "keyframes": {
+          "0%": {
+            "opacity": "0",
+            "transform": "translateX(-50%) translateY(20px)"
+          },
+          "100%": {
+            "opacity": "1",
+            "transform": "translateX(-50%) translateY(0)"
+          }
+        },
+        "duration": "0.6s",
+        "easing": "ease-out"
+      },
+      "popupSlideIn": {
+        "keyframes": {
+          "0%": {
+            "opacity": "0",
+            "transform": "translate(-50%, -50%) scale(0.8)"
+          },
+          "100%": {
+            "opacity": "1",
+            "transform": "translate(-50%, -50%) scale(1)"
+          }
+        },
+        "duration": "0.5s",
+        "easing": "ease-out"
+      },
+      "fadeIn": {
+        "keyframes": {
+          "0%": {
+            "opacity": "0"
+          },
+          "100%": {
+            "opacity": "1"
+          }
+        },
+        "duration": "0.3s",
+        "easing": "ease-out"
+      }
+    }
+  } 

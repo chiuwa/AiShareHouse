@@ -1,0 +1,150 @@
+{
+    "scene": {
+      "backgroundImage": "public/reception.png",
+      "components": [
+        {
+          "type": "option_buttons",
+          "position": { "x": "center", "y": "40%" },
+          "style": {
+            "buttonWidth": 280,
+            "buttonHeight": 40,
+            "fontSize": 16,
+            "backgroundColor": "#000000",
+            "textColor": "#FFFFFF",
+            "border": "2px solid #FFFFFF",
+            "padding": 10,
+            "margin": 8
+          },
+          "options": [
+            { "id": "1", "text": "拍卡進入" },
+            { "id": "2", "text": "新同事報到" },
+            { "id": "3", "text": "關於我們" }
+          ]
+        },
+        {
+          "type": "dialog_box",
+          "position": { "x": "center", "y": "85%" },
+          "style": {
+            "width": "90%",
+            "height": 100,
+            "backgroundColor": "#000000",
+            "textColor": "#FFFFFF",
+            "border": "2px solid #FFFFFF",
+            "fontSize": 14,
+            "padding": 16
+          },
+          "character": "小秘書",
+          "text": "「您好，今日您有兩件重要任務，是否要先查看？」"
+        }
+      ]
+    },
+    "characters": {
+      "小秘書": {
+        "role": "assistant",
+        "color": "#00ff00",
+        "image": {
+          "src": "/secretary.png",
+          "position": "right",
+          "animation": "slideInFromLeft",
+          "style": {
+            "width": "200px",
+            "height": "auto",
+            "position": "fixed",
+            "right": "20px",
+            "bottom": "180px",
+            "zIndex": 5
+          }
+        },
+        "dialogs": {
+          "welcome": "「您好，今日您有兩件重要任務，是否要先查看？」",
+          "card_entry": "「歡迎回來！請問今天需要什麼協助嗎？」",
+          "about_us": "「這裡是De. S&V AI 虛擬公司，我們提供各種 AI 助手服務。」"
+        }
+      },
+      "接待員": {
+        "role": "receptionist",
+        "color": "#ffaa00",
+        "image": {
+          "src": "/receptionist.png",
+          "position": "left",
+          "animation": "slideInFromLeft",
+          "style": {
+            "width": "200px",
+            "height": "auto",
+            "position": "fixed",
+            "left": "20px",
+            "bottom": "180px",
+            "zIndex": 5
+          }
+        },
+        "dialogs": {
+          "login_welcome": "「歡迎來到我們公司！請輸入您的員工資訊進行登入。」",
+          "new_employee": "「歡迎加入我們公司！我是接待員，讓我為您介紹公司環境和規章制度。」",
+          "orientation_start": "「首先，恭喜您成為我們團隊的一員！請跟我來進行新人導覽。」",
+          "company_tour": "「這裡是我們的工作區域，您可以在這裡與各種 AI 助手協作完成任務。」",
+          "welcome_package": "「這是您的新人歡迎包，包含員工手冊和必要的工作資訊。」",
+          "questions": "「如果您有任何問題，隨時都可以找我或小秘書，我們很樂意為您服務！」",
+          "about_company": "「這裡是De. S&V AI 虛擬公司」"
+        }
+      }
+    },
+    "pages": {
+      "main": {
+        "character": null,
+        "show_character_image": false
+      },
+      "login": {
+        "character": "接待員",
+        "default_dialog": "login_welcome",
+        "show_character_image": true
+      },
+      "new_employee": {
+        "character": "接待員",
+        "default_dialog": "new_employee",
+        "show_character_image": true,
+        "dialog_sequence": [
+          "new_employee",
+          "orientation_start",
+          "company_tour",
+          "welcome_package",
+          "questions"
+        ]
+      },
+      "about_us": {
+        "character": "接待員",
+        "default_dialog": "about_company",
+        "show_character_image": true
+      }
+    },
+    "animations": {
+      "slideInFromRight": {
+        "keyframes": {
+          "0%": {
+            "transform": "translateX(100%)",
+            "opacity": "0"
+          },
+          "100%": {
+            "transform": "translateX(0)",
+            "opacity": "1"
+          }
+        },
+        "duration": "0.8s",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      "slideInFromLeft": {
+        "keyframes": {
+          "0%": {
+            "transform": "translateX(-100%)",
+            "opacity": "0"
+          },
+          "100%": {
+            "transform": "translateX(0)",
+            "opacity": "1"
+          }
+        },
+        "duration": "0.8s",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      }
+    }
+  }
+  
